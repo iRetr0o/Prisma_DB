@@ -54,6 +54,50 @@ app.delete('/explorers/:id', async (req, res) => {
 	return res.json({message: "Eliminado correctamente"});
 });
 
+//--------------------------- Launch X ------------------------------------
+app.get('/launchx', async (req, res) => {
+  const allRegisters =  await prisma.launchx.findMany({});
+  res.json(allRegisters);
+});
+
+app.get('/launchx/:id', async (req, res) => {
+  const id = req.params.id;
+  const explorer = await prisma.launchx.findUnique({where: {id: parseInt(id)}});
+  res.json(explorer);
+});
+
+app.post('/launchx', async (req, res) => {
+  const explorer = {
+    name: req.body.name,
+    lang: req.body.lang,
+    missionCommander: req.body.missionCommander
+   };
+  const message = 'Explorer creado.';
+  await prisma.launchx.create({data: explorer});
+  return res.json({message});
+});
+
+app.put('/launchx/:id', async (req, res) => {
+	const id = parseInt(req.params.id);
+
+	await prisma.launchx.update({
+		where: {
+			id: id
+		},
+		data: {
+			lang: req.body.lang
+		}
+	})
+
+	return res.json({message: "Actualizado correctamente"});
+});
+
+app.delete('/launchx/:id', async (req, res) => {
+	const id = parseInt(req.params.id);
+	await prisma.launchx.delete({where: {id: id}});
+	return res.json({message: "Eliminado correctamente"});
+});
+
 app.listen(port, () => {
   console.log(`Listening to requests on port ${port}`);
 });
