@@ -80,4 +80,43 @@ const prisma = new PrismaClient();
   } finally {
     await prisma.$disconnect();
   }
+
+  try {
+    const explorer1 = await prisma.launchx.upsert( {
+      where: {name: "Explorer 1"},
+      update: {},
+      create: {
+        name: "Explorer 1",
+        lang: "javascript",
+        missionCommander: "Rodrigo",
+      },
+    });
+  
+    const explorer2 = await prisma.launchx.upsert( {
+      where: {name: "Explorer 2"},
+      update: {},
+      create: {
+        name: "Explorer 2",
+        lang: "java",
+        missionCommander: "Fernanda",
+      },
+    });
+  
+    const explorer3 = await prisma.launchx.upsert( {
+      where: {name: "Explorer 3"},
+      update: {},
+      create: {
+        name: "Explorer 3",
+        lang: "elixir",
+        missionCommander: "Carlo",
+      },
+    });
+  
+    console.log('Create 3 explorers of Launch X');
+  } catch(e) {
+    console.error(e);
+    process.exit(1);
+  } finally {
+    await prisma.$disconnect();
+  }
 })();
