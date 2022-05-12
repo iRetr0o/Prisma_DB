@@ -98,6 +98,15 @@ app.delete('/launchx/:id', async (req, res) => {
 	return res.json({message: "Eliminado correctamente"});
 });
 
+//Cors
+const cors = require("cors");
+
+const corsOptions = {
+  origin: "http://localhost:8081"
+}
+
+app.use(cors(corsOptions));
+
 app.listen(port, () => {
   console.log(`Listening to requests on port ${port}`);
 });
